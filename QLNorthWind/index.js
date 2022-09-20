@@ -2,12 +2,17 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 const config = require("./src/configs/db.config")
-const sql = require("mssql")
+const bodyParser = require('body-parser');
+const multer = require('multer') // v1.0.5
+const upload = multer() // for parsing multipart/form-data
+
 const app = express();
+const sql = require("mssql")
 
 const port = process.env.PORT || 3333;
 app.use(express.json());
-
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing ap
 
 async function getProduct() {
     try {
@@ -32,6 +37,13 @@ app.get("/get-all-product", async (req, res) => {
         products: products,
     })
 })
+
+
+app.post('/profile', upload.array(), (req, res, next) => {
+    console.log(req.body)
+    res.json(req.body)
+})
+app.use("/api", require("./src/routes/router"));
 app.get("*", (req, res) => {
     res.status(404).json({
         message: "404 Page not found",
@@ -39,7 +51,8 @@ app.get("*", (req, res) => {
 })
 
 
-app.get("/api", require("./src/routes/router").default);
+
+
 
 
 app.listen(port, () => {
