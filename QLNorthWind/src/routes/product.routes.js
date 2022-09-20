@@ -1,10 +1,14 @@
 const express = require("express");
 const ProductController = require("../controllers/product.controller.js");
-const productRouter = express.Router();
 
+const router = express.Router();
+
+
+router.use((req, res, next) => {
+    console.log('Time: ', Date.now())
+    next()
+})
 // productRouter.get("/get-all", (req, res) => ProductController.getAllProduct());
-productRouter.get("/get-all", function (req, res) {
-    res.send("All");
-});
+router.get("/", (req, res) => res.json("assss"));
 
-module.exports = productRouter;
+module.exports = router;

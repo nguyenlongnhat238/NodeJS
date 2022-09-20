@@ -1,16 +1,18 @@
 
-const config = {
-    user: 'sa',
-    password: '230801',
-    server: 'localhost',
-    database: 'Northwind',
-    extra: {
-        trustServerCertificate: true,
-        trustedConnection: true,
-        connectionString: "Data Source=NLN-KEN;database=Northwind;Integrated Security=True"
+var config = {
+    "server": "localhost",
+    "authentication": {
+        "type": "default",
+        "options": {
+            "userName": "sa",
+            "password": "230801"
+        }
     },
-    port: 55892,
-};
-
+    "options": {
+        "port": 1433,
+        "database": "Northwind",
+        "trustServerCertificate": true
+    }
+}
 
 module.exports = config;
