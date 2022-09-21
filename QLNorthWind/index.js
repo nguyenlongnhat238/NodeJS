@@ -13,6 +13,8 @@ const port = process.env.PORT || 3333;
 app.use(express.json());
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing ap
+const db = require("./src/configs/mondb.config")
+db.connect();
 
 async function getProduct() {
     try {

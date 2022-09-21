@@ -31,7 +31,7 @@ ProductService.getProductByID = async (req, res) => {
             }
         }
         else {
-            throw "Lỗi params"
+            throw 404
         }
     }
     catch (error) {
