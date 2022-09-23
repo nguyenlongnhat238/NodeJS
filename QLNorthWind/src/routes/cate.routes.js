@@ -15,4 +15,6 @@ router.patch("/:cateID/update-category", upload.array(), (req, res) => CateContr
 
 router.delete("/:cateID/delete-category", upload.array(), (req, res) => CateController.deleteCategory(req, res));
 
+router.delete("/:cateID/delete", upload.array(), (req, res) => CateController.deleteCategoryCallBack(req, res));
+
 module.exports = router;

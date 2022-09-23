@@ -1,8 +1,5 @@
 const CateService = {};
 const Category = require("../models/cate.model")
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://localhost:27017/";
-
 
 
 // CateService.getAllCate = async () => {
@@ -23,37 +20,54 @@ CateService.getAllCate = async () => {
     return await Category.find({})
 }
 
-CateService.getCateByID = async (id) => {
-    try {
-        console.log("service success")
-        const cate = await Category.findById(id)
-        return cate
-    } catch (error) {
-        console.log(error)
-        return NaN
-    }
+CateService.getCateByID = /**async*/ (id) => {
+    return Category.findById(id).then(result => result).catch(err => console.log(err))
+    // try {
+    //     console.log("service success")
+    //     const cate = await Category.findById(id)
+    //     return cate
+    // } catch (error) {
+    //     console.log(error)
+    //     return NaN
+    // }
 }
 
-CateService.createCategory = async (name, description) => {
-    try {
-        let cate = new Category({ name: name, description: description })
-        return result = await cate.save().then(err => err);
-    } catch (error) {
-        console.log(error)
-        return NaN
-    }
+CateService.createCategory = (name, description) => {
+    const cate = new Category({ name: name, description: description })
+    return cate.save().then(result => result).catch(err => console.log(err))
+    // try {
+    //     let cate = new Category({ name: name, description: description })
+    //     return result = await cate.save().then(err => err);
+    // } catch (error) {
+    //     console.log(error)
+    //     return NaN
+    // }
 }
 
 CateService.updateCategory = async (id, name, description) => {
-    try {
-        console.log("service success")
-        const cate = await Category.updateOne({ _id: id }, { $set: { name: name, description: description } })
-        console.log(cate)
-        return await Category.findById(id)
-    } catch (error) {
-        console.log(error)
-        return NaN
-    }
+
+    console.log("service success")
+    return Category.findById(id)
+        .then(result => Category.updateOne({ _id: id }, {
+            $set: {
+                name: name,
+                description: description
+            }
+        }))
+        .then(result => Category.findById(id))
+        .catch(error => {
+            console.log(lỗi)
+            return error
+        })
+    // try {
+    //     console.log("service success")
+    //     const cate = await Category.updateOne({ _id: id }, { $set: { name: name, description: description } })
+    //     console.log(cate)
+    //     return await Category.findById(id)
+    // } catch (error) {
+    //     console.log(error)
+    //     return NaN
+    // }
 }
 
 CateService.deleteCategory = async (id) => {
@@ -69,4 +83,17 @@ CateService.deleteCategory = async (id) => {
         return NaN
     }
 }
+
+CateService.deleteCategoryCB = (id) => {
+    console.log("succcessservice")
+    return Category.findById(id)
+        .then(result => Category.deleteOne({ _id: id }))
+        .then(result => result)
+        .catch(err => "Lỗi")
+};
+
+
+
 module.exports = CateService;
+
+
