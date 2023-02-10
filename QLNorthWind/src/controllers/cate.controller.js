@@ -2,6 +2,7 @@ const { get } = require("../routes/product.routes.js");
 const CateService = require("../services/cate.service.js");
 const CateController = {};
 
+
 CateController.getAllCate = /**async*/ (req, res) => {
     CateService.getAllCate()
         .then(result =>
@@ -83,11 +84,11 @@ CateController.getCateByID = /**async*/ (req, res) => {
 }
 
 
-CateController.createCategory = async (req, res) => {
-    const name = await req.body.name || ''
-    const description = await req.body.description || ''
+CateController.createCategory = (req, res) => {
+    const name = req.body.name || ''
+    const description = req.body.description || ''
     console.log(name, description)
-    if (name == undefined || name == '') {
+    if (!name) {
         res.status(400).json({
             status: "Failed",
             statusCode: 400,
@@ -104,7 +105,6 @@ CateController.createCategory = async (req, res) => {
             status: "Failed",
             statusCode: 500,
             Message: error
-
         }))
     // try {
     //     const name = await req.body.name || ''
